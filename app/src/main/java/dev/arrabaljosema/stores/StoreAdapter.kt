@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.arrabaljosema.stores.databinding.ItemStoreBinding
 
-class StoreAdapter(private var stores: MutableList<Store>, private var listener: OnClickListener) :
+class StoreAdapter(private var stores: MutableList<Store>, private var listener: MainActivity) :
     RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
 
     private lateinit var mContext: Context
