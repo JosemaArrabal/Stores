@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         //Código temporal perteneciente a lo que se realizó en el activity_main.xml
         mBinding.btnSave.setOnClickListener {
-            val store = Store(name = mBinding.etName.text.toString().trim())
+            val store = StoreEntity(name = mBinding.etName.text.toString().trim())
             mAdapter.add(store)
         }
 
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     /*
     * OnClickListener
     * */
-    fun onClick(store: Store) {
+    fun onClick(storeEntity: StoreEntity) {
 
     }
 }
