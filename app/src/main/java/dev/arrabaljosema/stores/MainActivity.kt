@@ -17,6 +17,12 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
+        //Código temporal perteneciente a lo que se realizó en el activity_main.xml
+        mBinding.btnSave.setOnClickListener {
+            val store = Store(name = mBinding.etName.text.toString().trim())
+            mAdapter.add(store)
+        }
+
         setupRecyclerview()
     }
 
@@ -34,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     /*
     * OnClickListener
     * */
-    override fun onClick(store: Store) {
+    fun onClick(store: Store) {
 
     }
 }
