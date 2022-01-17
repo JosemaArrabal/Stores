@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.arrabaljosema.stores.databinding.ActivityMainBinding
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +22,13 @@ class MainActivity : AppCompatActivity() {
         //Código temporal perteneciente a lo que se realizó en el activity_main.xml
         mBinding.btnSave.setOnClickListener {
             val store = StoreEntity(name = mBinding.etName.text.toString().trim())
+
+            //Hilo secundario
+            Thread {
+                //Se guardan primero los datos en la BD
+                StoreApplication.database.storeDao().addStore(store)
+            }.start()
+
             mAdapter.add(store)
         }
 
@@ -29,11 +38,25 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerview() {
         mAdapter = StoreAdapter(mutableListOf(), this)
         mGridLayout = GridLayoutManager(this, 2)
+        getStores()
 
         mBinding.recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = mGridLayout
             adapter = mAdapter
+        }
+    }
+
+    private fun getStores() {
+
+        // Con esto se efectúa la consulta de forma asíncrona
+        doAsync {
+
+            val stores = StoreApplication.database.storeDao().getAllStores()
+            uiThread {
+
+                mAdapter.setStores(stores)
+            }
         }
     }
 

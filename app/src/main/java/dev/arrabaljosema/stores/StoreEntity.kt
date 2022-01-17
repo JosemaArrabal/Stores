@@ -3,7 +3,7 @@ package dev.arrabaljosema.stores
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName="StoreEntity")
+@Entity(tableName = "StoreEntity")
 data class StoreEntity(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var name: String,
