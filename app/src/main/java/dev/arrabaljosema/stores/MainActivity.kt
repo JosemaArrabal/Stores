@@ -7,7 +7,7 @@ import dev.arrabaljosema.stores.databinding.ActivityMainBinding
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var mBinding: ActivityMainBinding
 
@@ -63,7 +63,19 @@ class MainActivity : AppCompatActivity() {
     /*
     * OnClickListener
     * */
-    fun onClick(storeEntity: StoreEntity) {
+    override fun onClick(storeEntity: StoreEntity) {
 
     }
+
+    override fun onFavoriteStore(storeEntity: StoreEntity) {
+
+        storeEntity.isFavorite = !storeEntity.isFavorite
+        doAsync {
+            StoreApplication.database.storeDao().updateStore(storeEntity)
+            uiThread {
+                mAdapter.update(storeEntity)
+            }
+        }
+    }
+
 }
